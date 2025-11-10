@@ -1,23 +1,30 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { LanguageSelector } from "@/components/LanguageSelector";
-import { ChatInterface } from "@/components/ChatInterface";
-import { Heart } from "lucide-react";
+import { ChatInterface, ChatInterfaceRef } from "@/components/ChatInterface";
+import { SymptomsChecker } from "@/components/SymptomsChecker";
+import { Activity } from "lucide-react";
 
 const Index = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("english");
+  const chatInterfaceRef = useRef<ChatInterfaceRef>(null);
+
+  const handleSymptomsSubmit = (symptoms: string[]) => {
+    const symptomsMessage = `I have the following symptoms: ${symptoms.join(", ")}. Can you provide relevant health information and advice?`;
+    chatInterfaceRef.current?.sendSymptoms([symptomsMessage]);
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         <header className="text-center mb-8 animate-in fade-in slide-in-from-top duration-500">
           <div className="flex items-center justify-center gap-3 mb-3">
-            <Heart className="w-10 h-10 text-primary" />
+            <Activity className="w-10 h-10 text-primary" />
             <h1 className="text-4xl md:text-5xl font-bold text-foreground">
-              Medical Assistant
+              Health Assistant
             </h1>
           </div>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Get general health information and suggestions in your preferred language
+            Check your symptoms and get health information in your preferred language
           </p>
         </header>
 
@@ -26,7 +33,14 @@ const Index = () => {
             selectedLanguage={selectedLanguage}
             onLanguageChange={setSelectedLanguage}
           />
-          <ChatInterface language={selectedLanguage} />
+          <SymptomsChecker 
+            onSymptomsSubmit={handleSymptomsSubmit}
+            language={selectedLanguage}
+          />
+          <ChatInterface 
+            ref={chatInterfaceRef}
+            language={selectedLanguage} 
+          />
         </div>
 
         <footer className="text-center mt-8 text-sm text-muted-foreground">

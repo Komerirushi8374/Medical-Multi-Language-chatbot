@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -16,7 +16,11 @@ interface ChatInterfaceProps {
   language: string;
 }
 
-export const ChatInterface = ({ language }: ChatInterfaceProps) => {
+export interface ChatInterfaceRef {
+  sendSymptoms: (symptoms: string[]) => void;
+}
+
+export const ChatInterface = forwardRef<ChatInterfaceRef, ChatInterfaceProps>(({ language }, ref) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       text: "Hello! I'm your medical assistant. How can I help you today? Please remember that I provide general information only, and you should always consult healthcare professionals for medical advice.",
@@ -36,17 +40,23 @@ export const ChatInterface = ({ language }: ChatInterfaceProps) => {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+  useImperativeHandle(ref, () => ({
+    sendSymptoms: (symptoms: string[]) => {
+      if (symptoms.length > 0) {
+        sendMessage(symptoms[0]);
+      }
+    }
+  }));
 
-    const userMessage = input.trim();
-    setInput("");
-    setMessages((prev) => [...prev, { text: userMessage, isBot: false }]);
+  const sendMessage = async (messageText: string) => {
+    if (!messageText.trim() || isLoading) return;
+
+    setMessages((prev) => [...prev, { text: messageText, isBot: false }]);
     setIsLoading(true);
 
     try {
       const { data, error } = await supabase.functions.invoke('medical-chat', {
-        body: { message: userMessage, language }
+        body: { message: messageText, language }
       });
 
       if (error) throw error;
@@ -69,6 +79,14 @@ export const ChatInterface = ({ language }: ChatInterfaceProps) => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSend = async () => {
+    if (!input.trim() || isLoading) return;
+
+    const userMessage = input.trim();
+    setInput("");
+    await sendMessage(userMessage);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -124,4 +142,4 @@ export const ChatInterface = ({ language }: ChatInterfaceProps) => {
       </div>
     </Card>
   );
-};
+});
