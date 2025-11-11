@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AlertCircle, Stethoscope } from "lucide-react";
+import { symptomsTranslations } from "@/lib/symptomsTranslations";
 
 interface SymptomsCheckerProps {
   onSymptomsSubmit: (symptoms: string[]) => void;
   language: string;
 }
 
-const commonSymptoms = [
+const commonSymptomsKeys = [
   "Fever",
   "Cough",
   "Headache",
@@ -33,18 +34,20 @@ const commonSymptoms = [
 
 export const SymptomsChecker = ({ onSymptomsSubmit, language }: SymptomsCheckerProps) => {
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
+  const translations = symptomsTranslations[language] || symptomsTranslations.english;
 
-  const toggleSymptom = (symptom: string) => {
+  const toggleSymptom = (symptomKey: string) => {
     setSelectedSymptoms(prev =>
-      prev.includes(symptom)
-        ? prev.filter(s => s !== symptom)
-        : [...prev, symptom]
+      prev.includes(symptomKey)
+        ? prev.filter(s => s !== symptomKey)
+        : [...prev, symptomKey]
     );
   };
 
   const handleSubmit = () => {
     if (selectedSymptoms.length > 0) {
-      onSymptomsSubmit(selectedSymptoms);
+      const translatedSymptoms = selectedSymptoms.map(key => translations[key]);
+      onSymptomsSubmit(translatedSymptoms);
       setSelectedSymptoms([]);
     }
   };
@@ -63,18 +66,18 @@ export const SymptomsChecker = ({ onSymptomsSubmit, language }: SymptomsCheckerP
       <CardContent className="space-y-4">
         <ScrollArea className="h-[280px] w-full rounded-md border p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {commonSymptoms.map((symptom) => (
-              <div key={symptom} className="flex items-center space-x-2">
+            {commonSymptomsKeys.map((symptomKey) => (
+              <div key={symptomKey} className="flex items-center space-x-2">
                 <Checkbox
-                  id={symptom}
-                  checked={selectedSymptoms.includes(symptom)}
-                  onCheckedChange={() => toggleSymptom(symptom)}
+                  id={symptomKey}
+                  checked={selectedSymptoms.includes(symptomKey)}
+                  onCheckedChange={() => toggleSymptom(symptomKey)}
                 />
                 <label
-                  htmlFor={symptom}
+                  htmlFor={symptomKey}
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                 >
-                  {symptom}
+                  {translations[symptomKey]}
                 </label>
               </div>
             ))}
@@ -86,7 +89,9 @@ export const SymptomsChecker = ({ onSymptomsSubmit, language }: SymptomsCheckerP
             <AlertCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
             <div className="text-sm">
               <p className="font-medium mb-1">Selected symptoms:</p>
-              <p className="text-muted-foreground">{selectedSymptoms.join(", ")}</p>
+              <p className="text-muted-foreground">
+                {selectedSymptoms.map(key => translations[key]).join(", ")}
+              </p>
             </div>
           </div>
         )}
