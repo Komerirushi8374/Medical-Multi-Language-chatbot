@@ -5,8 +5,9 @@ import { ChatInterface, ChatInterfaceRef } from "@/components/ChatInterface";
 import { SymptomsChecker } from "@/components/SymptomsChecker";
 import { ChatHistory } from "@/components/ChatHistory";
 import { Button } from "@/components/ui/button";
-import { Activity, LogOut } from "lucide-react";
+import { Activity, LogOut, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import { Session } from "@supabase/supabase-js";
 
 const Index = () => {
@@ -56,6 +57,14 @@ const Index = () => {
     navigate("/auth");
   };
 
+  const handleEmergency = () => {
+    toast({
+      title: "⚠️ Emergency Detected",
+      description: "Please call your local emergency services immediately. Stay calm and follow their instructions.",
+      variant: "destructive",
+    });
+  };
+
   if (!session) {
     return null;
   }
@@ -66,12 +75,18 @@ const Index = () => {
         <header className="text-center mb-8 animate-in fade-in slide-in-from-top duration-500">
           <div className="flex items-center justify-center gap-3 mb-3">
             <Activity className="w-10 h-10 text-primary" />
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground">Health Assistant</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+              Multilanguage's Medical Chatbot using Large Language Models (LLMs)
+            </h1>
           </div>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Check your symptoms and get health information in your preferred language
           </p>
-          <div className="mt-4">
+          <div className="mt-4 flex items-center justify-center gap-3">
+            <Button onClick={handleEmergency} variant="destructive" size="sm" className="gap-2">
+              <Phone className="w-4 h-4" />
+              Safety+ Emergency
+            </Button>
             <Button onClick={handleSignOut} variant="outline" size="sm">
               <LogOut className="w-4 h-4 mr-2" />
               Sign Out
@@ -95,16 +110,30 @@ const Index = () => {
           />
         </div>
 
-        <footer className="text-center mt-8 text-sm text-muted-foreground">
-          <p className="font-semibold mb-1">⚕️ Important Medical Disclaimer</p>
-          <p className="max-w-2xl mx-auto">
-            This AI assistant provides general health information for educational purposes only. 
-            It is not a substitute for professional medical advice, diagnosis, or treatment. 
-            Always seek the advice of your physician or qualified healthcare provider with any questions 
-            you may have regarding a medical condition. Never disregard professional medical advice or 
-            delay in seeking it because of something you have read here. In case of emergency, 
-            call your local emergency services immediately.
-          </p>
+        <footer className="text-center mt-8 text-sm text-muted-foreground space-y-4">
+          <div>
+            <h3 className="font-semibold text-base mb-2 text-foreground">Project Description</h3>
+            <p className="max-w-3xl mx-auto">
+              This project involves the development of a multilanguages medical chatbot designed to assist users in obtaining reliable health-related information through natural language interactions. The system is powered by Large Language Models (LLMs), enabling it to understand and respond to user queries in multiple languages with high contextual accuracy.
+            </p>
+            <p className="max-w-3xl mx-auto mt-2">
+              The chatbot also incorporates a user history management system, allowing it to store and retrieve previous conversations — similar to how platforms like ChatGPT.com manage user chat histories. This feature enhances personalization and continuity in user interactions.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-base mb-2 text-foreground">Team Members</h3>
+            <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
+              <span>Rushi (23BDS030)</span>
+              <span>•</span>
+              <span>Harsha (23BDS073)</span>
+              <span>•</span>
+              <span>Likhith (23BDS034)</span>
+              <span>•</span>
+              <span>Manasa (23BDS051)</span>
+              <span>•</span>
+              <span>Teja (23BDS064)</span>
+            </div>
+          </div>
         </footer>
       </div>
     </div>
