@@ -84,6 +84,17 @@ const EmergencyContacts = () => {
       return;
     }
 
+    // Validate Indian phone number format
+    const indianPhoneRegex = /^\+91[6-9]\d{9}$/;
+    if (!indianPhoneRegex.test(formData.phone_number)) {
+      toast({
+        title: "Invalid Phone Number",
+        description: "Please enter a valid Indian phone number (e.g., +919876543210)",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (editingId) {
       const { error } = await supabase
         .from("emergency_contacts")
@@ -212,9 +223,14 @@ const EmergencyContacts = () => {
                   type="tel"
                   value={formData.phone_number}
                   onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
-                  placeholder="+1234567890"
+                  placeholder="+919876543210"
+                  pattern="^\+91[6-9]\d{9}$"
+                  title="Please enter a valid Indian phone number starting with +91 followed by 10 digits"
                   required
                 />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Format: +91 followed by 10 digits (e.g., +919876543210)
+                </p>
               </div>
 
               <div>
