@@ -197,6 +197,80 @@ const EmergencyContacts = () => {
           </p>
         </header>
 
+        {/* Quick Dial Emergency Services */}
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold text-foreground mb-4">Quick Dial Emergency Services</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card className="p-4 bg-destructive/10 border-destructive/20">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold text-lg text-foreground">Ambulance</h3>
+                  <p className="text-2xl font-bold text-destructive">108</p>
+                </div>
+                <Button
+                  onClick={() => handleCall("108")}
+                  variant="destructive"
+                  size="icon"
+                  className="h-12 w-12"
+                >
+                  <Phone className="w-6 h-6" />
+                </Button>
+              </div>
+            </Card>
+
+            <Card className="p-4 bg-primary/10 border-primary/20">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold text-lg text-foreground">Police</h3>
+                  <p className="text-2xl font-bold text-primary">100</p>
+                </div>
+                <Button
+                  onClick={() => handleCall("100")}
+                  variant="default"
+                  size="icon"
+                  className="h-12 w-12"
+                >
+                  <Phone className="w-6 h-6" />
+                </Button>
+              </div>
+            </Card>
+
+            <Card className="p-4 bg-orange-500/10 border-orange-500/20">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold text-lg text-foreground">Fire</h3>
+                  <p className="text-2xl font-bold text-orange-500">101</p>
+                </div>
+                <Button
+                  onClick={() => handleCall("101")}
+                  variant="outline"
+                  size="icon"
+                  className="h-12 w-12 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
+                >
+                  <Phone className="w-6 h-6" />
+                </Button>
+              </div>
+            </Card>
+
+            <Card className="p-4 bg-secondary/10 border-secondary/20">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold text-lg text-foreground">Emergency (All)</h3>
+                  <p className="text-2xl font-bold text-secondary-foreground">112</p>
+                </div>
+                <Button
+                  onClick={() => handleCall("112")}
+                  variant="secondary"
+                  size="icon"
+                  className="h-12 w-12"
+                >
+                  <Phone className="w-6 h-6" />
+                </Button>
+              </div>
+            </Card>
+          </div>
+        </div>
+
         <Card className="p-6 mb-6">
           {!isAdding ? (
             <Button onClick={() => setIsAdding(true)} className="w-full gap-2">
