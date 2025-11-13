@@ -5,7 +5,7 @@ import { ChatInterface, ChatInterfaceRef } from "@/components/ChatInterface";
 import { SymptomsChecker } from "@/components/SymptomsChecker";
 import { ChatHistory } from "@/components/ChatHistory";
 import { Button } from "@/components/ui/button";
-import { Activity, LogOut, Phone, Users } from "lucide-react";
+import { Activity, LogOut, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Session } from "@supabase/supabase-js";
@@ -57,14 +57,6 @@ const Index = () => {
     navigate("/auth");
   };
 
-  const handleEmergency = () => {
-    toast({
-      title: "⚠️ Emergency Detected",
-      description: "Please call your local emergency services immediately. Stay calm and follow their instructions.",
-      variant: "destructive",
-    });
-  };
-
   if (!session) {
     return null;
   }
@@ -83,10 +75,6 @@ const Index = () => {
             Check your symptoms and get health information in your preferred language
           </p>
           <div className="mt-4 flex items-center justify-center gap-3 flex-wrap">
-            <Button onClick={handleEmergency} variant="destructive" size="sm" className="gap-2">
-              <Phone className="w-4 h-4" />
-              Safety+ Emergency
-            </Button>
             <Button onClick={() => navigate("/emergency-contacts")} variant="default" size="sm" className="gap-2">
               <Users className="w-4 h-4" />
               Emergency Contacts
