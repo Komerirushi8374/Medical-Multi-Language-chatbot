@@ -5,7 +5,7 @@ import { ChatInterface, ChatInterfaceRef } from "@/components/ChatInterface";
 import { SymptomsChecker } from "@/components/SymptomsChecker";
 import { ChatHistory } from "@/components/ChatHistory";
 import { Button } from "@/components/ui/button";
-import { Activity, LogOut, Users } from "lucide-react";
+import { LogOut, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Session } from "@supabase/supabase-js";
@@ -66,7 +66,6 @@ const Index = () => {
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         <header className="text-center mb-8 animate-in fade-in slide-in-from-top duration-500">
           <div className="flex items-center justify-center gap-3 mb-3">
-            <Activity className="w-10 h-10 text-primary" />
             <h1 className="text-3xl md:text-4xl font-bold text-foreground">
               Multilanguage's Medical Chatbot using Large Language Models (LLMs)
             </h1>
