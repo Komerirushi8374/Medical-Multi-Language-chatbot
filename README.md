@@ -3,7 +3,7 @@ Komeri Rushi(23bds030) , Meghavath Likhith Naik(23bds034)  , Saragalla Manasa(23
 This project is built with:
 - Vite
 - TypeScript
-- React
+- React 
 - shadcn-ui
 - Tailwind CSS
 
