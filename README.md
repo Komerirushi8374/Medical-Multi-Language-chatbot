@@ -265,8 +265,6 @@ npm run preview
 npm run lint
 ```
 
-## 🔌 API Integration
-
 ### Medical Chat API
 
 The application uses a Supabase Edge Function that communicates with the Lovable AI Gateway:
@@ -332,16 +330,11 @@ Contributions are welcome! Please follow these steps:
 
 
 
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## 🙏 Acknowledgments
 
 - [Supabase](https://supabase.com) for backend infrastructure
 - [shadcn/ui](https://ui.shadcn.com) for beautiful UI components
 - [Vercel](https://vercel.com) for deployment platform
-- [Lovable AI](https://lovable.dev) for AI gateway services
 - [Google Gemini](https://deepmind.google/technologies/gemini/) for LLM capabilities
 
 ## 📞 Support
@@ -361,4 +354,4 @@ For support, please open an issue in the GitHub repository or contact the projec
 
 ---
 
-**Made with ❤️ for better healthcare accessibility**
+
